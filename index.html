@@ -7,64 +7,88 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{--pink:#ff6b9d;--deep:#c2185b;--gold:#ffd700;}
+:root{--pink:#ff6b9d;--gold:#ffd700;}
 body{font-family:'Lato',sans-serif;background:#0a0005;color:white;overflow:hidden;height:100vh;width:100vw;}
-#petals-canvas,#stars-canvas,#fireworks-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;}
-#fireworks-canvas{z-index:100;display:none}
+#petals-canvas,#stars-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+
 #progress-bar{position:fixed;top:0;left:0;width:100%;z-index:999;display:flex;gap:4px;padding:10px 12px;}
-.prog-seg{flex:1;height:3px;background:rgba(255,255,255,0.25);border-radius:2px;overflow:hidden;}
+.prog-seg{flex:1;height:3px;background:rgba(255,255,255,0.2);border-radius:2px;overflow:hidden;}
 .prog-fill{height:100%;background:white;width:0%;transition:width 0.4s linear;border-radius:2px;}
-.slide{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px;opacity:0;pointer-events:none;transition:opacity 0.6s ease;z-index:10;}
+
+.slide{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px;opacity:0;pointer-events:none;transition:opacity 0.7s ease;z-index:10;}
 .slide.active{opacity:1;pointer-events:all}
+
 #s1{background:radial-gradient(ellipse at center,#1a0010 0%,#0a0005 100%)}
 #s2{background:radial-gradient(ellipse at 30% 60%,#1a0020 0%,#0a0005 100%)}
-#s3{background:radial-gradient(ellipse at 70% 40%,#200010 0%,#0a0005 100%)}
-#s4{background:radial-gradient(ellipse at center,#0d1a00 0%,#0a0005 100%)}
-#s5{background:radial-gradient(ellipse at center,#1a0010 0%,#0a0005 100%)}
+#sA1{background:radial-gradient(ellipse at 70% 40%,#200010 0%,#0a0005 100%)}
+#sA2{background:radial-gradient(ellipse at center,#0a1500 0%,#0a0005 100%)}
+#sB1{background:radial-gradient(ellipse at center,#001a10 0%,#0a0005 100%)}
 #s6{background:radial-gradient(ellipse at 40% 50%,#1a0a00 0%,#0a0005 100%)}
 #s7{background:radial-gradient(ellipse at center,#0a0015 0%,#0a0005 100%)}
-#s8{background:radial-gradient(ellipse at center,#1a0010 0%,#0a0005 100%)}
+#s8{background:radial-gradient(ellipse at center,#150800 0%,#0a0005 100%)}
 #s9{background:radial-gradient(ellipse at center,#0a0010 0%,#0a0005 100%)}
-#s10{background:radial-gradient(ellipse at center,#150010 0%,#0a0005 100%)}
-.card{background:rgba(255,255,255,0.05);backdrop-filter:blur(20px);border:1px solid rgba(255,107,157,0.2);border-radius:24px;padding:clamp(20px,5vw,36px);max-width:480px;width:100%;box-shadow:0 0 60px rgba(255,107,157,0.1);}
-.display{font-family:'Playfair Display',serif;font-size:clamp(26px,7vw,48px);line-height:1.2;margin-bottom:14px;}
+
+.card{background:rgba(255,255,255,0.05);backdrop-filter:blur(20px);border:1px solid rgba(255,107,157,0.2);border-radius:24px;padding:clamp(22px,5vw,38px);max-width:480px;width:100%;box-shadow:0 0 60px rgba(255,107,157,0.08);}
+.card.green-glow{border-color:rgba(107,255,157,0.25);box-shadow:0 0 60px rgba(107,255,157,0.06);}
+
+.display{font-family:'Playfair Display',serif;font-size:clamp(26px,7.5vw,48px);line-height:1.2;margin-bottom:16px;}
 .display i{font-style:italic;color:var(--pink)}
-.subtitle{font-size:clamp(13px,3.5vw,16px);color:rgba(255,255,255,0.6);line-height:1.8;font-weight:300;}
+.display.green i{color:#6bff9d}
+.subtitle{font-size:clamp(15px,4vw,17px);color:rgba(255,255,255,0.65);line-height:1.9;font-weight:300;}
 .subtitle b{color:rgba(255,255,255,0.9);font-weight:400}
-.big-heart{font-size:clamp(70px,22vw,110px);animation:heartbeat 1.2s ease-in-out infinite;display:block;margin-bottom:16px;filter:drop-shadow(0 0 20px rgba(255,107,157,0.8));}
-@keyframes heartbeat{0%,100%{transform:scale(1)}14%{transform:scale(1.15)}28%{transform:scale(1)}42%{transform:scale(1.1)}70%{transform:scale(1)}}
-#himaa-name{font-family:'Playfair Display',serif;font-size:clamp(42px,14vw,80px);font-weight:700;background:linear-gradient(135deg,#ff6b9d,#ffd700,#ff6b9d);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 3s linear infinite;opacity:0;transform:translateY(30px);transition:opacity 1s ease,transform 1s ease;}
+
+.big-heart{font-size:clamp(72px,22vw,110px);animation:heartbeat 1.3s ease-in-out infinite;display:block;margin-bottom:16px;filter:drop-shadow(0 0 24px rgba(255,107,157,0.9));}
+@keyframes heartbeat{0%,100%{transform:scale(1)}14%{transform:scale(1.18)}28%{transform:scale(1)}42%{transform:scale(1.1)}70%{transform:scale(1)}}
+
+#himaa-name{font-family:'Playfair Display',serif;font-size:clamp(44px,14vw,82px);font-weight:700;background:linear-gradient(135deg,#ff6b9d,#ffd700,#ff6b9d);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 3s linear infinite;opacity:0;transform:translateY(30px);transition:opacity 1s ease,transform 1s ease;}
 #himaa-name.show{opacity:1;transform:translateY(0)}
 @keyframes shimmer{to{background-position:200% center}}
-.typewriter{font-family:'Playfair Display',serif;font-size:clamp(15px,4vw,20px);font-style:italic;color:rgba(255,255,255,0.8);min-height:50px;line-height:1.5;}
+
+.typewriter{font-family:'Playfair Display',serif;font-size:clamp(16px,4.5vw,22px);font-style:italic;color:rgba(255,255,255,0.8);min-height:55px;line-height:1.5;}
 .cursor{display:inline-block;animation:blink 0.7s infinite;color:var(--pink)}
 @keyframes blink{50%{opacity:0}}
-.btn{display:inline-block;margin:8px;padding:12px 26px;border:1.5px solid var(--pink);border-radius:999px;font-size:clamp(14px,4vw,17px);font-family:'Lato',sans-serif;font-weight:400;color:white;background:rgba(255,107,157,0.1);cursor:pointer;transition:all 0.3s ease;letter-spacing:0.5px;}
+
+.btn{display:inline-block;margin:8px;padding:13px 28px;border:1.5px solid var(--pink);border-radius:999px;font-size:clamp(15px,4vw,18px);font-family:'Lato',sans-serif;color:white;background:rgba(255,107,157,0.1);cursor:pointer;transition:all 0.3s ease;}
 .btn:active{transform:scale(0.95);background:rgba(255,107,157,0.3)}
 .btn.filled{background:var(--pink);border-color:var(--pink)}
-.evidence-item{display:flex;align-items:flex-start;gap:12px;text-align:left;margin:10px 0;opacity:0;transform:translateX(-20px);transition:all 0.5s ease;}
+.btn.green{border-color:#6bff9d;background:rgba(107,255,157,0.1);}
+.btn.green.filled{background:#2ecc71;border-color:#2ecc71;}
+
+.evidence-item{display:flex;align-items:flex-start;gap:14px;text-align:left;margin:12px 0;opacity:0;transform:translateX(-20px);transition:all 0.5s ease;}
 .evidence-item.show{opacity:1;transform:translateX(0)}
-.ev-icon{font-size:18px;margin-top:2px;flex-shrink:0}
-.ev-text{font-size:clamp(13px,3.5vw,15px);color:rgba(255,255,255,0.8);line-height:1.6}
+.ev-icon{font-size:20px;margin-top:2px;flex-shrink:0}
+.ev-text{font-size:clamp(14px,4vw,16px);color:rgba(255,255,255,0.8);line-height:1.7}
+
 .gallery-wrap{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:16px 0;}
 .gallery-wrap img{width:min(28vw,110px);aspect-ratio:3/4;object-fit:cover;border-radius:14px;border:2px solid rgba(255,107,157,0.4);box-shadow:0 4px 20px rgba(0,0,0,0.4);}
-.meter-wrap{margin:20px 0;text-align:center}
-.meter-label{font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:8px}
-.meter-bar{width:100%;height:10px;background:rgba(255,255,255,0.1);border-radius:999px;overflow:hidden;}
-.meter-fill{height:100%;width:0%;background:linear-gradient(90deg,#ff6b9d,#ffd700);border-radius:999px;transition:width 2s ease;}
-.meter-pct{font-size:24px;font-weight:700;color:var(--gold);margin-top:10px}
-.final-msg{font-family:'Playfair Display',serif;font-size:clamp(18px,5.5vw,28px);font-style:italic;line-height:1.7;color:rgba(255,255,255,0.9);}
-#hint{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);font-size:11px;color:rgba(255,255,255,0.2);z-index:999;letter-spacing:1px;animation:fadeHint 4s ease forwards;pointer-events:none;}
-@keyframes fadeHint{0%,70%{opacity:1}100%{opacity:0}}
+
+/* Promises slide */
+.promise-item{display:flex;align-items:flex-start;gap:14px;text-align:left;margin:14px 0;opacity:0;transform:translateY(16px);transition:all 0.5s ease;}
+.promise-item.show{opacity:1;transform:translateY(0)}
+.pr-icon{font-size:26px;flex-shrink:0;margin-top:2px;}
+.pr-text{font-size:clamp(14px,4vw,16px);color:rgba(255,255,255,0.85);line-height:1.7}
+.pr-text b{color:white;font-weight:500}
+
+.final-msg{font-family:'Playfair Display',serif;font-size:clamp(17px,5vw,26px);font-style:italic;line-height:1.8;color:rgba(255,255,255,0.9);}
+
+#hint{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);font-size:11px;color:rgba(255,255,255,0.2);z-index:999;letter-spacing:1.5px;animation:fadeHint 5s ease forwards;pointer-events:none;}
+@keyframes fadeHint{0%,65%{opacity:1}100%{opacity:0}}
+
 @keyframes slideUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
 .su{animation:slideUp 0.8s ease forwards}
-.d1{animation-delay:0.2s;opacity:0}.d2{animation-delay:0.5s;opacity:0}.d3{animation-delay:0.8s;opacity:0}
+.d1{animation-delay:0.3s;opacity:0}.d2{animation-delay:0.6s;opacity:0}.d3{animation-delay:0.9s;opacity:0}
+
+/* Finale */
+#finale-wrap{position:fixed;top:0;left:0;width:100%;height:100%;z-index:20;display:none;flex-direction:column;justify-content:center;align-items:center;background:#0a0005;}
+#heart-canvas{display:block;}
+#finale-name{font-family:'Playfair Display',serif;font-size:clamp(48px,16vw,90px);font-weight:700;background:linear-gradient(135deg,#ff6b9d,#ffd700,#ff6b9d);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 3s linear infinite;opacity:0;transition:opacity 1.5s ease;margin-top:-16px;}
+#finale-line{font-family:'Playfair Display',serif;font-size:clamp(15px,4vw,20px);font-style:italic;color:rgba(255,255,255,0.55);opacity:0;transition:opacity 1.5s ease;margin-top:14px;letter-spacing:0.5px;}
 </style>
 </head>
 <body>
+
 <canvas id="stars-canvas"></canvas>
 <canvas id="petals-canvas"></canvas>
-<canvas id="fireworks-canvas"></canvas>
 <div id="progress-bar"></div>
 <div id="hint">tap anywhere to continue</div>
 
@@ -75,47 +99,64 @@ body{font-family:'Lato',sans-serif;background:#0a0005;color:white;overflow:hidde
   <br>
   <div class="typewriter" id="tw1"><span class="cursor">|</span></div>
   <br>
-  <button class="btn filled d3 su" onclick="nextSlide()" style="margin-top:20px">Open 💌</button>
+  <button class="btn filled su d3" onclick="nextSlide()" style="margin-top:20px">Open 💌</button>
 </div>
 
-<!-- S2 Angry? -->
+<!-- S2 Angry? — branch point -->
 <div class="slide" id="s2">
   <div class="card">
     <div class="display">Still <i>angry</i>? 🥺</div>
     <p class="subtitle" style="margin-bottom:24px">It's okay... I understand.<br>Just tell me honestly.</p>
-    <button class="btn" onclick="goSlide(3)">😡 Yes, very much</button>
-    <button class="btn filled" onclick="goSlide(5)">😊 A little less now</button>
+    <button class="btn" onclick="goSlide('A1')">😡 Yes, very much</button>
+    <button class="btn filled" onclick="goSlide('B1')">😊 A little less now</button>
   </div>
 </div>
 
-<!-- S3 Court -->
-<div class="slide" id="s3" onclick="nextSlide()">
+<!-- ═══ PATH A — Angry ═══ -->
+
+<!-- sA1 Court -->
+<div class="slide" id="sA1" onclick="nextSlide()">
   <div class="card">
     <div class="display">⚖️ Court of <i>Love</i></div>
-    <p class="subtitle"><b>Case No. 143 — Doctor Devi vs. The Accused 😭</b><br><br>Judge: Himaa 👑<br>Accused: Me (very guilty)<br><br>Crime: Being careless with the most important person in my life.</p>
+    <p class="subtitle">
+      <b>Case No. 143 — Doctor Devi vs. The Accused 😭</b><br><br>
+      Judge: Himaa 👑<br>
+      Accused: Me (very guilty)<br><br>
+      Crime: Being careless with the most important person in my life.
+    </p>
     <br>
     <button class="btn" onclick="nextSlide()">View Evidence 📋</button>
   </div>
 </div>
 
-<!-- S4 Evidence -->
-<div class="slide" id="s4">
+<!-- sA2 Evidence -->
+<div class="slide" id="sA2">
   <div class="card">
-    <div class="display" style="font-size:clamp(20px,5.5vw,32px)">Evidence <i>Against</i> Me</div>
+    <div class="display" style="font-size:clamp(22px,6vw,34px)">Evidence <i>Against</i> Me</div>
     <div id="evidence-list" style="margin:16px 0"></div>
-    <button class="btn" id="ev-btn" style="opacity:0;transition:opacity 0.5s" onclick="goSlide(6)">Final Appeal 💌</button>
+    <button class="btn" id="ev-btn" style="opacity:0;transition:opacity 0.5s" onclick="goSlide(6)">I've heard enough 💌</button>
   </div>
 </div>
 
-<!-- S5 Happy path -->
-<div class="slide" id="s5" onclick="nextSlide()">
-  <div class="card">
-    <div class="display">That means <i>everything</i> 🌸</div>
-    <p class="subtitle">Even a little less angry is a win.<br><br>Your smile is worth more than you know, Himaa.<br><br>Keep reading — there's more ahead. 🌹</p>
+<!-- ═══ PATH B — Not angry ═══ -->
+
+<!-- sB1 Happy reaction -->
+<div class="slide" id="sB1" onclick="nextSlide()">
+  <div class="card green-glow">
+    <div class="display green">You just made<br>my <i>day</i> 🌸</div>
+    <p class="subtitle">
+      Himaa, honestly?<br><br>
+      The fact that you're not furious anymore<br>means more than you know.<br><br>
+      You could have closed this tab.<br>
+      But you didn't. 💚<br><br>
+      That's so very <i>you</i>.
+    </p>
     <br>
-    <button class="btn filled" onclick="nextSlide()">Continue ✨</button>
+    <button class="btn green filled" onclick="nextSlide()">Continue 🌿</button>
   </div>
 </div>
+
+<!-- ═══ SHARED from slide 6 ═══ -->
 
 <!-- S6 Apology -->
 <div class="slide" id="s6" onclick="nextSlide()">
@@ -124,13 +165,15 @@ body{font-family:'Lato',sans-serif;background:#0a0005;color:white;overflow:hidde
     <p class="subtitle">
       Himaa,<br><br>
       I know "sorry" is just a word.<br>
-      And I know I've made you say<br><b>"it's fine"</b> when it wasn't.<br><br>
+      And I know I've made you say <b>"it's fine"</b> when it wasn't.<br><br>
       I was careless —<br>not because you don't matter,<br>but because I was foolish enough<br>to think you'd always be okay.<br><br>
       <b>You are my Personal Doctor Devi 💖</b><br>
-      The one who fixes everything,<br>but nobody checks if <i>you're</i> okay.<br><br>
+      The one who fixes everything,<br>but nobody ever checks if <i>you're</i> okay.<br><br>
       So today I'm checking.<br><br>
-      Are you okay?<br>Are you rested?<br>Are you eating properly?<br><br>
-      I'm sorry for every time<br>I forgot to ask first.<br><br>
+      Are you okay?<br>
+      Are you rested?<br>
+      Are you eating properly?<br><br>
+      I'm sorry for every time I forgot to ask first.<br><br>
       No pressure. No expectations.<br>
       Just a sincere sorry — from my heart. 🌷
     </p>
@@ -152,74 +195,87 @@ body{font-family:'Lato',sans-serif;background:#0a0005;color:white;overflow:hidde
   <button class="btn filled su d3" onclick="nextSlide()">One Last Thing 💫</button>
 </div>
 
-<!-- S8 Sorry meter -->
+<!-- S8 Promises — replaces sorry meter -->
 <div class="slide" id="s8">
   <div class="card">
-    <div class="display">My Sorry <i>Level</i> 📊</div>
-    <div class="meter-wrap">
-      <div class="meter-label">Regret meter</div>
-      <div class="meter-bar"><div class="meter-fill" id="meter"></div></div>
-      <div class="meter-pct" id="meter-pct">0%</div>
-    </div>
-    <p class="subtitle">Spoiler: it goes to 100% 😅<br>Because you deserve nothing less.</p>
-    <br>
-    <button class="btn filled" onclick="nextSlide()">Final Message 🌷</button>
+    <div class="display" style="font-size:clamp(22px,6vw,34px)">My <i>Promises</i> to You 🌷</div>
+    <div id="promise-list" style="margin:16px 0"></div>
+    <button class="btn filled" id="promise-btn" style="opacity:0;transition:opacity 0.5s" onclick="nextSlide()">Final Message 🌹</button>
   </div>
 </div>
 
-<!-- S9 Final msg -->
-<div class="slide" id="s9" onclick="nextSlide()">
+<!-- S9 Final message -->
+<div class="slide" id="s9">
   <div class="card">
     <div class="final-msg su">"What happened<br>cannot be unchanged.<br><br>But <i>you</i> can choose<br>what happens next." 🌷</div>
     <br>
     <p class="subtitle su d1">Thank you for reading all of this, Himaa.<br>You didn't have to. But you did. 💖</p>
     <br>
-    <button class="btn filled su d2" onclick="nextSlide()">😊 Last Slide</button>
+    <button class="btn filled su d2" onclick="showFinale()">😊 Last Slide</button>
   </div>
 </div>
 
-<!-- S10 Finale -->
-<div class="slide" id="s10">
-  <span class="big-heart" style="font-size:clamp(60px,18vw,90px)">💖</span>
-  <div class="display su" style="font-size:clamp(28px,9vw,52px)">Thank You,<br><i>Himaa</i> 🌹</div>
-  <p class="subtitle su d1" style="max-width:320px">Whether today, tomorrow,<br>or when you're ready —<br><br>I'll be here. 🌹</p>
-  <p class="subtitle su d2" style="margin-top:14px;font-size:11px;opacity:0.35">— Your Personal Doctor Devi ki patient 😅💖</p>
+<!-- FINALE -->
+<div id="finale-wrap">
+  <canvas id="heart-canvas"></canvas>
+  <div id="finale-name">Himaa</div>
+  <div id="finale-line">I'll always be here for you 🌹</div>
 </div>
 
 <script>
-const TOTAL=10;
-let cur=1;
+// Slide order for progress bar
+const ORDER = ['s1','s2','sA1','sA2','s6','s7','s8','s9'];
+// (sB1 replaces sA1+sA2 in happy path — same total feel)
+let cur = 's1';
 
-// Progress bar
-const pb=document.getElementById('progress-bar');
-for(let i=0;i<TOTAL;i++){
-  const seg=document.createElement('div');seg.className='prog-seg';
-  const f=document.createElement('div');f.className='prog-fill';f.id='pf'+(i+1);
-  seg.appendChild(f);pb.appendChild(seg);
-}
-function updateProg(n){
-  for(let i=1;i<=TOTAL;i++){
+function updateProg(id){
+  const pb = document.getElementById('progress-bar');
+  if(!pb.children.length){
+    for(let i=0;i<8;i++){
+      const seg=document.createElement('div');seg.className='prog-seg';
+      const f=document.createElement('div');f.className='prog-fill';f.id='pf'+i;
+      seg.appendChild(f);pb.appendChild(seg);
+    }
+  }
+  const idx = ORDER.indexOf(id);
+  for(let i=0;i<8;i++){
     const f=document.getElementById('pf'+i);
-    if(i<n)f.style.width='100%';
-    else if(i===n){f.style.width='0%';setTimeout(()=>f.style.width='100%',50);}
+    if(!f)continue;
+    if(i<idx)f.style.width='100%';
+    else if(i===idx){f.style.width='0%';setTimeout(()=>f.style.width='100%',50);}
     else f.style.width='0%';
   }
 }
-updateProg(1);
+updateProg('s1');
 
-function goSlide(n){
-  document.getElementById('s'+cur).classList.remove('active');
-  cur=n;
-  document.getElementById('s'+cur).classList.add('active');
+// Flow maps: what comes after each slide
+const NEXT = {
+  's1':'s2',
+  's2':null,
+  'sA1':'sA2',
+  'sA2':'s6',
+  'sB1':'s6',
+  's6':'s7',
+  's7':'s8',
+  's8':'s9',
+  's9':null
+};
+
+function goSlide(id){
+  document.getElementById(cur).classList.remove('active');
+  cur = String(id);
+  document.getElementById(cur).classList.add('active');
   updateProg(cur);
   onEnter(cur);
 }
-function nextSlide(){if(cur<TOTAL)goSlide(cur+1);}
+function nextSlide(){
+  const n = NEXT[cur];
+  if(n) goSlide(n);
+}
 
-function onEnter(n){
-  if(n===4)showEvidence();
-  if(n===8)animMeter();
-  if(n===10)launchFW();
+function onEnter(id){
+  if(id==='sA2') showEvidence();
+  if(id==='s8')  showPromises();
 }
 
 // Typewriter
@@ -229,7 +285,7 @@ let idx=0;
 function typeWrite(){
   if(idx<=msg.length){
     twEl.innerHTML=msg.slice(0,idx)+'<span class="cursor">|</span>';
-    idx++;setTimeout(typeWrite,idx===1?700:60);
+    idx++;setTimeout(typeWrite,idx===1?700:65);
   }
 }
 setTimeout(()=>{document.getElementById('himaa-name').classList.add('show');setTimeout(typeWrite,900);},500);
@@ -240,7 +296,7 @@ const evs=[
   {icon:'🥺',text:'Not noticing when you were quietly hurting.'},
   {icon:'⏳',text:'Taking your patience for granted, too many times.'},
   {icon:'💖',text:'But genuinely regretting every single moment of it.'},
-  {icon:'🌹',text:'And caring about you — more than words can ever say.'},
+  {icon:'🌹',text:'And caring about you more than words can ever say.'},
 ];
 function showEvidence(){
   const el=document.getElementById('evidence-list');el.innerHTML='';
@@ -248,20 +304,31 @@ function showEvidence(){
     const d=document.createElement('div');d.className='evidence-item';
     d.innerHTML=`<span class="ev-icon">${e.icon}</span><span class="ev-text">${e.text}</span>`;
     el.appendChild(d);
-    setTimeout(()=>d.classList.add('show'),i*350+200);
+    setTimeout(()=>d.classList.add('show'),i*380+200);
   });
-  setTimeout(()=>{document.getElementById('ev-btn').style.opacity='1';},evs.length*350+500);
+  setTimeout(()=>{document.getElementById('ev-btn').style.opacity='1';},evs.length*380+500);
 }
 
-// Meter
-function animMeter(){
-  const fill=document.getElementById('meter');const pct=document.getElementById('meter-pct');
-  let v=0;const iv=setInterval(()=>{v=Math.min(v+1,100);fill.style.width=v+'%';pct.textContent=v+'%';if(v>=100)clearInterval(iv);},18);
+// Promises
+const promises=[
+  {icon:'👂',text:'<b>I will listen more.</b> Not just hear — actually listen, when you need to be heard.'},
+  {icon:'🔍',text:'<b>I will notice more.</b> The small things. The quiet days. The moments you need checking on.'},
+  {icon:'💖',text:'<b>I will never take you for granted again.</b> You are not "always okay." You are important.'},
+];
+function showPromises(){
+  const el=document.getElementById('promise-list');el.innerHTML='';
+  promises.forEach((p,i)=>{
+    const d=document.createElement('div');d.className='promise-item';
+    d.innerHTML=`<span class="pr-icon">${p.icon}</span><span class="pr-text">${p.text}</span>`;
+    el.appendChild(d);
+    setTimeout(()=>d.classList.add('show'),i*450+300);
+  });
+  setTimeout(()=>{document.getElementById('promise-btn').style.opacity='1';},promises.length*450+600);
 }
 
 // Stars
 const sc=document.getElementById('stars-canvas');const sctx=sc.getContext('2d');let stars=[];
-function initStars(){sc.width=innerWidth;sc.height=innerHeight;stars=[];for(let i=0;i<120;i++)stars.push({x:Math.random()*sc.width,y:Math.random()*sc.height,r:Math.random()*1.4+0.3,a:Math.random(),da:(Math.random()-0.5)*0.008});}
+function initStars(){sc.width=innerWidth;sc.height=innerHeight;stars=[];for(let i=0;i<130;i++)stars.push({x:Math.random()*sc.width,y:Math.random()*sc.height,r:Math.random()*1.5+0.3,a:Math.random(),da:(Math.random()-0.5)*0.007});}
 function drawStars(){sctx.clearRect(0,0,sc.width,sc.height);stars.forEach(s=>{s.a+=s.da;if(s.a<=0||s.a>=1)s.da*=-1;sctx.beginPath();sctx.arc(s.x,s.y,s.r,0,Math.PI*2);sctx.fillStyle=`rgba(255,255,255,${s.a})`;sctx.fill();});requestAnimationFrame(drawStars);}
 initStars();drawStars();
 
@@ -269,24 +336,92 @@ initStars();drawStars();
 const pc=document.getElementById('petals-canvas');const pctx=pc.getContext('2d');let petals=[];
 const petalEmojis=['🌸','💮','🌹','💖','✨','🌷'];
 function initPetals(){pc.width=innerWidth;pc.height=innerHeight;}
-function spawnPetal(){petals.push({x:Math.random()*pc.width,y:-30,emoji:petalEmojis[Math.floor(Math.random()*petalEmojis.length)],size:Math.random()*14+9,speed:Math.random()*1.4+0.7,drift:(Math.random()-0.5)*1.1,rot:Math.random()*360,rotSpeed:(Math.random()-0.5)*2.5,opacity:Math.random()*0.5+0.25});}
+function spawnPetal(){petals.push({x:Math.random()*pc.width,y:-30,emoji:petalEmojis[Math.floor(Math.random()*petalEmojis.length)],size:Math.random()*14+9,speed:Math.random()*1.3+0.6,drift:(Math.random()-0.5)*1,rot:Math.random()*360,rotSpeed:(Math.random()-0.5)*2,opacity:Math.random()*0.45+0.2});}
 function drawPetals(){pctx.clearRect(0,0,pc.width,pc.height);petals.forEach((p,i)=>{p.y+=p.speed;p.x+=p.drift;p.rot+=p.rotSpeed;pctx.save();pctx.globalAlpha=p.opacity;pctx.font=p.size+'px serif';pctx.translate(p.x,p.y);pctx.rotate(p.rot*Math.PI/180);pctx.fillText(p.emoji,0,0);pctx.restore();if(p.y>pc.height+40)petals.splice(i,1);});requestAnimationFrame(drawPetals);}
-initPetals();drawPetals();setInterval(spawnPetal,380);
+initPetals();drawPetals();setInterval(spawnPetal,420);
 
-// Fireworks
-const fc=document.getElementById('fireworks-canvas');const fctx=fc.getContext('2d');let fparticles=[];
-function launchFW(){
-  fc.style.display='block';fc.width=innerWidth;fc.height=innerHeight;
-  let c=0;const iv=setInterval(()=>{burst(Math.random()*fc.width,Math.random()*fc.height*0.65);c++;if(c>12)clearInterval(iv);},280);
-  animFW();
-}
-function burst(x,y){
-  const cols=['#ff6b9d','#ffd700','#ff9ff3','#ff4757','#ffffff','#ffa502','#ff6348'];
-  for(let i=0;i<55;i++){const a=Math.random()*Math.PI*2;const sp=Math.random()*5+2;fparticles.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,color:cols[Math.floor(Math.random()*cols.length)],life:1,decay:Math.random()*0.018+0.012,r:Math.random()*3+1});}
-}
-function animFW(){fctx.fillStyle='rgba(0,0,0,0.15)';fctx.fillRect(0,0,fc.width,fc.height);fparticles.forEach((p,i)=>{p.x+=p.vx;p.y+=p.vy;p.vy+=0.07;p.life-=p.decay;fctx.beginPath();fctx.arc(p.x,p.y,p.r,0,Math.PI*2);fctx.fillStyle=p.color;fctx.globalAlpha=Math.max(0,p.life);fctx.fill();fctx.globalAlpha=1;if(p.life<=0)fparticles.splice(i,1);});requestAnimationFrame(animFW);}
+// Finale — slow romantic heart
+function showFinale(){
+  document.getElementById(cur).classList.remove('active');
+  const fw=document.getElementById('finale-wrap');
+  fw.style.display='flex';
 
-window.addEventListener('resize',()=>{initStars();initPetals();fc.width=innerWidth;fc.height=innerHeight;});
+  const canvas=document.getElementById('heart-canvas');
+  const ctx=canvas.getContext('2d');
+  const W=Math.min(innerWidth*0.9,420);
+  canvas.width=W;canvas.height=W;
+
+  const totalPoints=300;
+  const pts=[];
+  for(let i=0;i<totalPoints;i++){
+    const t=(i/totalPoints)*2*Math.PI;
+    const x=16*Math.pow(Math.sin(t),3);
+    const y=-(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t));
+    pts.push({x,y});
+  }
+  const scale=W/44;
+  const cx=W/2, cy=W/2+W*0.04;
+  let progress=0;
+
+  function frame(){
+    ctx.clearRect(0,0,W,W);
+
+    // Soft glow bg
+    const grd=ctx.createRadialGradient(cx,cy,0,cx,cy,W*0.46);
+    grd.addColorStop(0,'rgba(255,107,157,0.1)');
+    grd.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=grd;ctx.fillRect(0,0,W,W);
+
+    // Fill fades in after halfway
+    if(progress>0.5){
+      const alpha=Math.min(1,(progress-0.5)*2)*0.2;
+      ctx.beginPath();
+      pts.forEach((p,i)=>{const px=cx+p.x*scale;const py=cy+p.y*scale;i===0?ctx.moveTo(px,py):ctx.lineTo(px,py);});
+      ctx.closePath();
+      ctx.fillStyle=`rgba(255,107,157,${alpha})`;
+      ctx.fill();
+    }
+
+    // Progressive stroke
+    const drawCount=Math.floor(progress*totalPoints);
+    if(drawCount>1){
+      ctx.beginPath();
+      for(let i=0;i<drawCount;i++){
+        const p=pts[i];const px=cx+p.x*scale;const py=cy+p.y*scale;
+        i===0?ctx.moveTo(px,py):ctx.lineTo(px,py);
+      }
+      ctx.strokeStyle='#ff6b9d';ctx.lineWidth=3;ctx.lineCap='round';ctx.lineJoin='round';
+      ctx.shadowColor='rgba(255,107,157,0.9)';ctx.shadowBlur=14;
+      ctx.stroke();ctx.shadowBlur=0;
+    }
+
+    // Gold sparkles near end
+    if(progress>0.82){
+      const sa=Math.min(1,(progress-0.82)*5.5);
+      for(let i=0;i<8;i++){
+        const angle=(i/8)*Math.PI*2+(progress*1.5);
+        const r=W*0.37;
+        ctx.beginPath();
+        ctx.arc(cx+Math.cos(angle)*r,cy+Math.sin(angle)*r,2.5,0,Math.PI*2);
+        ctx.fillStyle=`rgba(255,215,0,${sa*0.8})`;ctx.fill();
+      }
+    }
+
+    progress+=0.0035;
+    if(progress<1.0){
+      requestAnimationFrame(frame);
+    } else {
+      frame();
+      setTimeout(()=>{
+        document.getElementById('finale-name').style.opacity='1';
+        setTimeout(()=>{document.getElementById('finale-line').style.opacity='1';},1100);
+      },500);
+    }
+  }
+  frame();
+}
+
+window.addEventListener('resize',()=>{initStars();initPetals();});
 </script>
 </body>
 </html>
