@@ -59,8 +59,9 @@ body{font-family:'Lato',sans-serif;background:#0a0005;color:white;overflow:hidde
 .ev-icon{font-size:20px;margin-top:2px;flex-shrink:0}
 .ev-text{font-size:clamp(14px,4vw,16px);color:rgba(255,255,255,0.8);line-height:1.7}
 
-.gallery-wrap{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:16px 0;}
-.gallery-wrap img{width:min(28vw,110px);aspect-ratio:3/4;object-fit:cover;border-radius:14px;border:2px solid rgba(255,107,157,0.4);box-shadow:0 4px 20px rgba(0,0,0,0.4);}
+.gallery-wrap{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:20px 0;}
+.gallery-wrap img{width:clamp(80px,22vw,140px);aspect-ratio:3/4;object-fit:cover;border-radius:16px;border:2.5px solid rgba(255,107,157,0.5);box-shadow:0 8px 32px rgba(255,107,157,0.25);transition:transform 0.3s ease;}
+.gallery-wrap img:hover{transform:scale(1.05);}
 
 /* Promises slide */
 .promise-item{display:flex;align-items:flex-start;gap:14px;text-align:left;margin:14px 0;opacity:0;transform:translateY(16px);transition:all 0.5s ease;}
@@ -71,18 +72,26 @@ body{font-family:'Lato',sans-serif;background:#0a0005;color:white;overflow:hidde
 
 .final-msg{font-family:'Playfair Display',serif;font-size:clamp(17px,5vw,26px);font-style:italic;line-height:1.8;color:rgba(255,255,255,0.9);}
 
-#hint{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);font-size:11px;color:rgba(255,255,255,0.2);z-index:999;letter-spacing:1.5px;animation:fadeHint 5s ease forwards;pointer-events:none;}
-@keyframes fadeHint{0%,65%{opacity:1}100%{opacity:0}}
+#hint{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);font-size:11px;color:rgba(255,255,255,0.2);z-index:999;letter-spacing:1.5px;animation:fadeHint 6s ease forwards;pointer-events:none;}
+@keyframes fadeHint{0%,70%{opacity:1}100%{opacity:0}}
 
 @keyframes slideUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
 .su{animation:slideUp 0.8s ease forwards}
 .d1{animation-delay:0.3s;opacity:0}.d2{animation-delay:0.6s;opacity:0}.d3{animation-delay:0.9s;opacity:0}
 
 /* Finale */
-#finale-wrap{position:fixed;top:0;left:0;width:100%;height:100%;z-index:20;display:none;flex-direction:column;justify-content:center;align-items:center;background:#0a0005;}
-#heart-canvas{display:block;}
-#finale-name{font-family:'Playfair Display',serif;font-size:clamp(48px,16vw,90px);font-weight:700;background:linear-gradient(135deg,#ff6b9d,#ffd700,#ff6b9d);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 3s linear infinite;opacity:0;transition:opacity 1.5s ease;margin-top:-16px;}
-#finale-line{font-family:'Playfair Display',serif;font-size:clamp(15px,4vw,20px);font-style:italic;color:rgba(255,255,255,0.55);opacity:0;transition:opacity 1.5s ease;margin-top:14px;letter-spacing:0.5px;}
+#finale-wrap{position:fixed;top:0;left:0;width:100%;height:100%;z-index:20;display:none;flex-direction:column;justify-content:center;align-items:center;background:linear-gradient(135deg,#0a0005 0%,#1a0010 50%,#0a0005 100%);overflow:hidden;}
+#finale-canvas{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;}
+#finale-text-wrapper{position:relative;text-align:center;z-index:15;max-width:90%;padding:0 20px;}
+#finale-message{font-family:'Playfair Display',serif;font-size:clamp(28px,10vw,52px);font-weight:700;color:#ff6b9d;opacity:0;margin:20px 0;text-shadow:0 0 20px rgba(255,107,157,0.4);letter-spacing:1px;line-height:1.4;animation:messageReveal 0.8s ease-out forwards;}
+#finale-subtext{font-family:'Playfair Display',serif;font-size:clamp(16px,5vw,26px);font-style:italic;color:rgba(255,255,255,0.8);opacity:0;margin:16px 0;letter-spacing:0.5px;animation:textFade 1s ease-out 0.4s forwards;}
+#finale-question{font-family:'Playfair Display',serif;font-size:clamp(18px,5.5vw,28px);color:#ffd700;font-weight:600;opacity:0;margin-top:28px;text-shadow:0 0 20px rgba(255,215,0,0.5);animation:questionAppear 0.6s ease-out 1.2s forwards;}
+#hearts-rain{position:absolute;width:100%;height:100%;top:0;left:0;pointer-events:none;}
+#sparkles{position:absolute;width:100%;height:100%;top:0;left:0;pointer-events:none;}
+#confetti{position:absolute;width:100%;height:100%;top:0;left:0;pointer-events:none;}
+@keyframes messageReveal{from{opacity:0;transform:translateY(20px);filter:blur(10px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+@keyframes textFade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes questionAppear{from{opacity:0;transform:scale(0.8);color:#ff6b9d}to{opacity:1;transform:scale(1);color:#ffd700}}
 </style>
 </head>
 <body>
@@ -90,16 +99,16 @@ body{font-family:'Lato',sans-serif;background:#0a0005;color:white;overflow:hidde
 <canvas id="stars-canvas"></canvas>
 <canvas id="petals-canvas"></canvas>
 <div id="progress-bar"></div>
-<div id="hint">tap anywhere to continue</div>
+<div id="hint">Click "Open 💌" button to begin</div>
 
 <!-- S1 Opener -->
-<div class="slide active" id="s1" onclick="nextSlide()">
+<div class="slide active" id="s1">
   <span class="big-heart">💖</span>
   <div id="himaa-name">Himaa</div>
   <br>
   <div class="typewriter" id="tw1"><span class="cursor">|</span></div>
   <br>
-  <button class="btn filled su d3" onclick="nextSlide()" style="margin-top:20px">Open 💌</button>
+  <button class="btn filled su d3" onclick="goSlide('s2')" style="margin-top:20px">Open 💌</button>
 </div>
 
 <!-- S2 Angry? — branch point -->
@@ -107,15 +116,15 @@ body{font-family:'Lato',sans-serif;background:#0a0005;color:white;overflow:hidde
   <div class="card">
     <div class="display">Still <i>angry</i>? 🥺</div>
     <p class="subtitle" style="margin-bottom:24px">It's okay... I understand.<br>Just tell me honestly.</p>
-    <button class="btn" onclick="goSlide('A1')">😡 Yes, very much</button>
-    <button class="btn filled" onclick="goSlide('B1')">😊 A little less now</button>
+    <button class="btn" onclick="goSlide('sA1')">😡 Yes, very much</button>
+    <button class="btn filled" onclick="goSlide('sB1')">😊 A little less now</button>
   </div>
 </div>
 
 <!-- ═══ PATH A — Angry ═══ -->
 
 <!-- sA1 Court -->
-<div class="slide" id="sA1" onclick="nextSlide()">
+<div class="slide" id="sA1">
   <div class="card">
     <div class="display">⚖️ Court of <i>Love</i></div>
     <p class="subtitle">
@@ -125,23 +134,23 @@ body{font-family:'Lato',sans-serif;background:#0a0005;color:white;overflow:hidde
       Crime: Being careless with the most important person in my life.
     </p>
     <br>
-    <button class="btn" onclick="nextSlide()">View Evidence 📋</button>
+    <button class="btn" onclick="goSlide('sA2')">View Evidence 📋</button>
   </div>
 </div>
 
 <!-- sA2 Evidence -->
 <div class="slide" id="sA2">
-  <div class="card">
+  <div class="card" style="max-height:80vh;overflow-y:auto">
     <div class="display" style="font-size:clamp(22px,6vw,34px)">Evidence <i>Against</i> Me</div>
     <div id="evidence-list" style="margin:16px 0"></div>
-    <button class="btn" id="ev-btn" style="opacity:0;transition:opacity 0.5s" onclick="goSlide(6)">I've heard enough 💌</button>
+    <button class="btn" id="ev-btn" style="opacity:0;transition:opacity 0.5s" onclick="goSlide('s6')">I've heard enough 💌</button>
   </div>
 </div>
 
 <!-- ═══ PATH B — Not angry ═══ -->
 
 <!-- sB1 Happy reaction -->
-<div class="slide" id="sB1" onclick="nextSlide()">
+<div class="slide" id="sB1">
   <div class="card green-glow">
     <div class="display green">You just made<br>my <i>day</i> 🌸</div>
     <p class="subtitle">
@@ -152,14 +161,14 @@ body{font-family:'Lato',sans-serif;background:#0a0005;color:white;overflow:hidde
       That's so very <i>you</i>.
     </p>
     <br>
-    <button class="btn green filled" onclick="nextSlide()">Continue 🌿</button>
+    <button class="btn green filled" onclick="goSlide('s6')">Continue 🌿</button>
   </div>
 </div>
 
 <!-- ═══ SHARED from slide 6 ═══ -->
 
 <!-- S6 Apology -->
-<div class="slide" id="s6" onclick="nextSlide()">
+<div class="slide" id="s6">
   <div class="card" style="max-height:86vh;overflow-y:auto">
     <div class="display">💌 From My <i>Heart</i></div>
     <p class="subtitle">
@@ -178,7 +187,7 @@ body{font-family:'Lato',sans-serif;background:#0a0005;color:white;overflow:hidde
       Just a sincere sorry — from my heart. 🌷
     </p>
     <br>
-    <button class="btn filled" onclick="nextSlide()">😊 Continue</button>
+    <button class="btn filled" onclick="goSlide('s7')">😊 Continue</button>
   </div>
 </div>
 
@@ -186,13 +195,13 @@ body{font-family:'Lato',sans-serif;background:#0a0005;color:white;overflow:hidde
 <div class="slide" id="s7">
   <div class="display su">📸 Our <i>Moments</i></div>
   <div class="gallery-wrap su d1">
-    <img src="photo1.jpg" alt="Memory 1">
-    <img src="photo2.jpg" alt="Memory 2">
-    <img src="photo3.jpg" alt="Memory 3">
+    <img src="photo1.jpg" alt="Memory 1" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22120%22 height=%22160%22%3E%3Crect fill=%22%23ff6b9d%22 width=%22120%22 height=%22160%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 fill=%22white%22 text-anchor=%22middle%22 dy=%22.3em%22 font-size=%2214%22%3EPhoto 1%3C/text%3E%3C/svg%3E'">
+    <img src="photo2.jpg" alt="Memory 2" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22120%22 height=%22160%22%3E%3Crect fill=%22%23ffd700%22 width=%22120%22 height=%22160%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 fill=%22white%22 text-anchor=%22middle%22 dy=%22.3em%22 font-size=%2214%22%3EPhoto 2%3C/text%3E%3C/svg%3E'">
+    <img src="photo3.jpg" alt="Memory 3" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22120%22 height=%22160%22%3E%3Crect fill=%226bff9d%22 width=%22120%22 height=%22160%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 fill=%22white%22 text-anchor=%22middle%22 dy=%22.3em%22 font-size=%2214%22%3EPhoto 3%3C/text%3E%3C/svg%3E'">
   </div>
   <p class="subtitle su d2" style="max-width:320px">Every photo tells a story.<br>Every story has you in it. 🌹</p>
   <br>
-  <button class="btn filled su d3" onclick="nextSlide()">One Last Thing 💫</button>
+  <button class="btn filled su d3" onclick="goSlide('s8')">One Last Thing 💫</button>
 </div>
 
 <!-- S8 Promises — replaces sorry meter -->
@@ -200,32 +209,37 @@ body{font-family:'Lato',sans-serif;background:#0a0005;color:white;overflow:hidde
   <div class="card">
     <div class="display" style="font-size:clamp(22px,6vw,34px)">My <i>Promises</i> to You 🌷</div>
     <div id="promise-list" style="margin:16px 0"></div>
-    <button class="btn filled" id="promise-btn" style="opacity:0;transition:opacity 0.5s" onclick="nextSlide()">Final Message 🌹</button>
+    <button class="btn filled" id="promise-btn" style="opacity:0;transition:opacity 0.5s" onclick="goSlide('s9')">Final Message 🌹</button>
   </div>
 </div>
 
 <!-- S9 Final message -->
 <div class="slide" id="s9">
   <div class="card">
-    <div class="final-msg su">"What happened<br>cannot be unchanged.<br><br>But <i>you</i> can choose<br>what happens next." 🌷</div>
+    <div class="display su" style="font-size:clamp(28px,8vw,44px)">Ready? 💫</div>
     <br>
-    <p class="subtitle su d1">Thank you for reading all of this, Himaa.<br>You didn't have to. But you did. 💖</p>
+    <p class="subtitle su d1">Let me show you something special... 💖</p>
     <br>
-    <button class="btn filled su d2" onclick="showFinale()">😊 Last Slide</button>
+    <button class="btn filled su d2" onclick="showFinale()">🎆 Yes! 💕</button>
   </div>
 </div>
 
 <!-- FINALE -->
 <div id="finale-wrap">
-  <canvas id="heart-canvas"></canvas>
-  <div id="finale-name">Himaa</div>
-  <div id="finale-line">I'll always be here for you 🌹</div>
+  <canvas id="finale-canvas"></canvas>
+  <div id="hearts-rain"></div>
+  <div id="finale-text-wrapper">
+    <div id="finale-message"></div>
+    <div id="finale-subtext"></div>
+    <div id="finale-question"></div>
+  </div>
+  <div id="sparkles"></div>
+  <div id="confetti"></div>
 </div>
 
 <script>
 // Slide order for progress bar
 const ORDER = ['s1','s2','sA1','sA2','s6','s7','s8','s9'];
-// (sB1 replaces sA1+sA2 in happy path — same total feel)
 let cur = 's1';
 
 function updateProg(id){
@@ -250,7 +264,7 @@ updateProg('s1');
 
 // Flow maps: what comes after each slide
 const NEXT = {
-  's1':'s2',
+  's1':null,
   's2':null,
   'sA1':'sA2',
   'sA2':'s6',
@@ -262,12 +276,18 @@ const NEXT = {
 };
 
 function goSlide(id){
-  document.getElementById(cur).classList.remove('active');
+  if(!id) return;
+  const oldSlide = document.getElementById(cur);
+  if(oldSlide) oldSlide.classList.remove('active');
   cur = String(id);
-  document.getElementById(cur).classList.add('active');
-  updateProg(cur);
-  onEnter(cur);
+  const newSlide = document.getElementById(cur);
+  if(newSlide) {
+    newSlide.classList.add('active');
+    updateProg(cur);
+    onEnter(cur);
+  }
 }
+
 function nextSlide(){
   const n = NEXT[cur];
   if(n) goSlide(n);
@@ -293,135 +313,315 @@ setTimeout(()=>{document.getElementById('himaa-name').classList.add('show');setT
 // Evidence
 const evs=[
   {icon:'💔',text:'Being careless when you needed attention most.'},
-  {icon:'🥺',text:'Not noticing when you were quietly hurting.'},
-  {icon:'⏳',text:'Taking your patience for granted, too many times.'},
+  {icon:'😔',text:'Not noticing when you were quietly hurting.'},
+  {icon:'⏰',text:'Taking your patience for granted, too many times.'},
   {icon:'💖',text:'But genuinely regretting every single moment of it.'},
   {icon:'🌹',text:'And caring about you more than words can ever say.'},
 ];
 function showEvidence(){
-  const el=document.getElementById('evidence-list');el.innerHTML='';
+  const el=document.getElementById('evidence-list');
+  if(!el) return;
+  el.innerHTML='';
   evs.forEach((e,i)=>{
-    const d=document.createElement('div');d.className='evidence-item';
+    const d=document.createElement('div');
+    d.className='evidence-item';
     d.innerHTML=`<span class="ev-icon">${e.icon}</span><span class="ev-text">${e.text}</span>`;
     el.appendChild(d);
     setTimeout(()=>d.classList.add('show'),i*380+200);
   });
-  setTimeout(()=>{document.getElementById('ev-btn').style.opacity='1';},evs.length*380+500);
+  setTimeout(()=>{
+    const btn = document.getElementById('ev-btn');
+    if(btn) btn.style.opacity='1';
+  },evs.length*380+500);
 }
 
 // Promises
 const promises=[
-  {icon:'👂',text:'<b>I will listen more.</b> Not just hear — actually listen, when you need to be heard.'},
-  {icon:'🔍',text:'<b>I will notice more.</b> The small things. The quiet days. The moments you need checking on.'},
-  {icon:'💖',text:'<b>I will never take you for granted again.</b> You are not "always okay." You are important.'},
+  {icon:'👂',text:'<b>I will listen more.</b> Not just hear — actually listen, with all my heart.'},
+  {icon:'👁️',text:'<b>I will notice more.</b> The small things. The quiet days. The moments you need me.'},
+  {icon:'💪',text:'<b>I will never take you for granted.</b> You are not "always okay." You matter most.'},
 ];
 function showPromises(){
-  const el=document.getElementById('promise-list');el.innerHTML='';
+  const el=document.getElementById('promise-list');
+  if(!el) return;
+  el.innerHTML='';
   promises.forEach((p,i)=>{
-    const d=document.createElement('div');d.className='promise-item';
+    const d=document.createElement('div');
+    d.className='promise-item';
     d.innerHTML=`<span class="pr-icon">${p.icon}</span><span class="pr-text">${p.text}</span>`;
     el.appendChild(d);
     setTimeout(()=>d.classList.add('show'),i*450+300);
   });
-  setTimeout(()=>{document.getElementById('promise-btn').style.opacity='1';},promises.length*450+600);
+  setTimeout(()=>{
+    const btn = document.getElementById('promise-btn');
+    if(btn) btn.style.opacity='1';
+  },promises.length*450+600);
 }
 
 // Stars
-const sc=document.getElementById('stars-canvas');const sctx=sc.getContext('2d');let stars=[];
-function initStars(){sc.width=innerWidth;sc.height=innerHeight;stars=[];for(let i=0;i<130;i++)stars.push({x:Math.random()*sc.width,y:Math.random()*sc.height,r:Math.random()*1.5+0.3,a:Math.random(),da:(Math.random()-0.5)*0.007});}
-function drawStars(){sctx.clearRect(0,0,sc.width,sc.height);stars.forEach(s=>{s.a+=s.da;if(s.a<=0||s.a>=1)s.da*=-1;sctx.beginPath();sctx.arc(s.x,s.y,s.r,0,Math.PI*2);sctx.fillStyle=`rgba(255,255,255,${s.a})`;sctx.fill();});requestAnimationFrame(drawStars);}
-initStars();drawStars();
+const sc=document.getElementById('stars-canvas');
+const sctx=sc.getContext('2d');
+let stars=[];
+function initStars(){
+  sc.width=innerWidth;
+  sc.height=innerHeight;
+  stars=[];
+  for(let i=0;i<130;i++){
+    stars.push({
+      x:Math.random()*sc.width,
+      y:Math.random()*sc.height,
+      r:Math.random()*1.5+0.3,
+      a:Math.random(),
+      da:(Math.random()-0.5)*0.007
+    });
+  }
+}
+function drawStars(){
+  sctx.clearRect(0,0,sc.width,sc.height);
+  stars.forEach(s=>{
+    s.a+=s.da;
+    if(s.a<=0||s.a>=1)s.da*=-1;
+    sctx.beginPath();
+    sctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    sctx.fillStyle=`rgba(255,255,255,${s.a})`;
+    sctx.fill();
+  });
+  requestAnimationFrame(drawStars);
+}
+initStars();
+drawStars();
 
 // Petals
-const pc=document.getElementById('petals-canvas');const pctx=pc.getContext('2d');let petals=[];
-const petalEmojis=['🌸','💮','🌹','💖','✨','🌷'];
-function initPetals(){pc.width=innerWidth;pc.height=innerHeight;}
-function spawnPetal(){petals.push({x:Math.random()*pc.width,y:-30,emoji:petalEmojis[Math.floor(Math.random()*petalEmojis.length)],size:Math.random()*14+9,speed:Math.random()*1.3+0.6,drift:(Math.random()-0.5)*1,rot:Math.random()*360,rotSpeed:(Math.random()-0.5)*2,opacity:Math.random()*0.45+0.2});}
-function drawPetals(){pctx.clearRect(0,0,pc.width,pc.height);petals.forEach((p,i)=>{p.y+=p.speed;p.x+=p.drift;p.rot+=p.rotSpeed;pctx.save();pctx.globalAlpha=p.opacity;pctx.font=p.size+'px serif';pctx.translate(p.x,p.y);pctx.rotate(p.rot*Math.PI/180);pctx.fillText(p.emoji,0,0);pctx.restore();if(p.y>pc.height+40)petals.splice(i,1);});requestAnimationFrame(drawPetals);}
-initPetals();drawPetals();setInterval(spawnPetal,420);
+const pc=document.getElementById('petals-canvas');
+const pctx=pc.getContext('2d');
+let petals=[];
+const petalEmojis=['🌸','💮','🌹','💖','✨','🌷','💕','🌺'];
+function initPetals(){
+  pc.width=innerWidth;
+  pc.height=innerHeight;
+}
+function spawnPetal(){
+  petals.push({
+    x:Math.random()*pc.width,
+    y:-30,
+    emoji:petalEmojis[Math.floor(Math.random()*petalEmojis.length)],
+    size:Math.random()*14+9,
+    speed:Math.random()*1.3+0.6,
+    drift:(Math.random()-0.5)*1,
+    rot:Math.random()*360,
+    rotSpeed:(Math.random()-0.5)*2,
+    opacity:Math.random()*0.45+0.2
+  });
+}
+function drawPetals(){
+  pctx.clearRect(0,0,pc.width,pc.height);
+  petals.forEach((p,i)=>{
+    p.y+=p.speed;
+    p.x+=p.drift;
+    p.rot+=p.rotSpeed;
+    pctx.save();
+    pctx.globalAlpha=p.opacity;
+    pctx.font=p.size+'px serif';
+    pctx.translate(p.x,p.y);
+    pctx.rotate(p.rot*Math.PI/180);
+    pctx.fillText(p.emoji,0,0);
+    pctx.restore();
+    if(p.y>pc.height+40)petals.splice(i,1);
+  });
+  requestAnimationFrame(drawPetals);
+}
+initPetals();
+drawPetals();
+setInterval(spawnPetal,420);
 
-// Finale — slow romantic heart
+// Finale — Cute teddy bear gift style - innocent and sweet
 function showFinale(){
-  document.getElementById(cur).classList.remove('active');
+  const curSlide = document.getElementById(cur);
+  if(curSlide) curSlide.classList.remove('active');
+  
   const fw=document.getElementById('finale-wrap');
   fw.style.display='flex';
 
-  const canvas=document.getElementById('heart-canvas');
+  const canvas=document.getElementById('finale-canvas');
   const ctx=canvas.getContext('2d');
-  const W=Math.min(innerWidth*0.9,420);
-  canvas.width=W;canvas.height=W;
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
 
-  const totalPoints=300;
-  const pts=[];
-  for(let i=0;i<totalPoints;i++){
-    const t=(i/totalPoints)*2*Math.PI;
-    const x=16*Math.pow(Math.sin(t),3);
-    const y=-(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t));
-    pts.push({x,y});
+  let particles=[];
+  
+  // Create soft floating particles
+  function createParticles(){
+    for(let i=0;i<100;i++){
+      particles.push({
+        x:Math.random()*canvas.width,
+        y:Math.random()*canvas.height,
+        size:Math.random()*2+0.5,
+        opacity:Math.random()*0.4+0.1,
+        color:'#ff6b9d',
+        vx:(Math.random()-0.5)*0.8,
+        vy:(Math.random()-0.5)*0.8
+      });
+    }
   }
-  const scale=W/44;
-  const cx=W/2, cy=W/2+W*0.04;
-  let progress=0;
 
-  function frame(){
-    ctx.clearRect(0,0,W,W);
-
-    // Soft glow bg
-    const grd=ctx.createRadialGradient(cx,cy,0,cx,cy,W*0.46);
-    grd.addColorStop(0,'rgba(255,107,157,0.1)');
-    grd.addColorStop(1,'rgba(0,0,0,0)');
-    ctx.fillStyle=grd;ctx.fillRect(0,0,W,W);
-
-    // Fill fades in after halfway
-    if(progress>0.5){
-      const alpha=Math.min(1,(progress-0.5)*2)*0.2;
+  function drawParticles(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    
+    particles.forEach(p=>{
+      p.x+=p.vx;
+      p.y+=p.vy;
+      p.opacity*=0.995;
+      
+      if(p.x<0||p.x>canvas.width) p.vx*=-1;
+      if(p.y<0||p.y>canvas.height) p.vy*=-1;
+      
       ctx.beginPath();
-      pts.forEach((p,i)=>{const px=cx+p.x*scale;const py=cy+p.y*scale;i===0?ctx.moveTo(px,py):ctx.lineTo(px,py);});
-      ctx.closePath();
-      ctx.fillStyle=`rgba(255,107,157,${alpha})`;
+      ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+      ctx.fillStyle=p.color;
+      ctx.globalAlpha=p.opacity;
       ctx.fill();
-    }
-
-    // Progressive stroke
-    const drawCount=Math.floor(progress*totalPoints);
-    if(drawCount>1){
-      ctx.beginPath();
-      for(let i=0;i<drawCount;i++){
-        const p=pts[i];const px=cx+p.x*scale;const py=cy+p.y*scale;
-        i===0?ctx.moveTo(px,py):ctx.lineTo(px,py);
-      }
-      ctx.strokeStyle='#ff6b9d';ctx.lineWidth=3;ctx.lineCap='round';ctx.lineJoin='round';
-      ctx.shadowColor='rgba(255,107,157,0.9)';ctx.shadowBlur=14;
-      ctx.stroke();ctx.shadowBlur=0;
-    }
-
-    // Gold sparkles near end
-    if(progress>0.82){
-      const sa=Math.min(1,(progress-0.82)*5.5);
-      for(let i=0;i<8;i++){
-        const angle=(i/8)*Math.PI*2+(progress*1.5);
-        const r=W*0.37;
-        ctx.beginPath();
-        ctx.arc(cx+Math.cos(angle)*r,cy+Math.sin(angle)*r,2.5,0,Math.PI*2);
-        ctx.fillStyle=`rgba(255,215,0,${sa*0.8})`;ctx.fill();
-      }
-    }
-
-    progress+=0.0035;
-    if(progress<1.0){
-      requestAnimationFrame(frame);
-    } else {
-      frame();
-      setTimeout(()=>{
-        document.getElementById('finale-name').style.opacity='1';
-        setTimeout(()=>{document.getElementById('finale-line').style.opacity='1';},1100);
-      },500);
+    });
+    ctx.globalAlpha=1;
+    
+    if(particles.some(p=>p.opacity>0.05)){
+      requestAnimationFrame(drawParticles);
     }
   }
-  frame();
+
+  // Show particles
+  createParticles();
+  setTimeout(drawParticles, 50);
+
+  // Cute message sequence
+  setTimeout(()=>{
+    const msgEl=document.getElementById('finale-message');
+    if(msgEl){
+      msgEl.textContent='🧸 This is for you 🧸';
+      msgEl.style.opacity='1';
+    }
+    createTeddyRain();
+  },200);
+
+  setTimeout(()=>{
+    const subEl=document.getElementById('finale-subtext');
+    if(subEl){
+      subEl.textContent='My little gift from my heart 💕';
+      subEl.style.opacity='1';
+    }
+  },800);
+
+  setTimeout(()=>{
+    const qEl=document.getElementById('finale-question');
+    if(qEl){
+      qEl.textContent='I love you so much 🧸💖';
+      qEl.style.opacity='1';
+      createSoftSparkles();
+      createCuteConfetti();
+    }
+  },1300);
 }
 
-window.addEventListener('resize',()=>{initStars();initPetals();});
+// Teddy bears falling - CUTE style
+function createTeddyRain(){
+  const rainDiv = document.getElementById('hearts-rain');
+  if(!rainDiv) return;
+  
+  const cuties=['🧸','🐻','🎀','💕','🌸','💖','✨','🎁'];
+  for(let i=0;i<35;i++){
+    setTimeout(()=>{
+      const item = document.createElement('div');
+      item.style.position = 'absolute';
+      item.style.left = Math.random()*100+'%';
+      item.style.top = '-40px';
+      item.style.fontSize = (Math.random()*28+22)+'px';
+      item.style.opacity = Math.random()*0.8+0.5;
+      item.style.animation = `fall ${Math.random()*3+3.5}s linear forwards`;
+      item.style.pointerEvents = 'none';
+      item.style.transform = `rotate(${Math.random()*20-10}deg)`;
+      item.innerHTML = cuties[Math.floor(Math.random()*cuties.length)];
+      rainDiv.appendChild(item);
+      
+      setTimeout(()=>item.remove(),4500);
+    },i*140);
+  }
+}
+
+// Soft sparkles - cute style
+function createSoftSparkles(){
+  const sparklesDiv = document.getElementById('sparkles');
+  if(!sparklesDiv) return;
+  
+  for(let i=0;i<60;i++){
+    setTimeout(()=>{
+      const sparkle = document.createElement('div');
+      sparkle.style.position = 'absolute';
+      sparkle.style.left = Math.random()*100+'%';
+      sparkle.style.top = Math.random()*100+'%';
+      sparkle.style.fontSize = (Math.random()*24+16)+'px';
+      sparkle.style.opacity = Math.random()*0.7+0.3;
+      sparkle.style.animation = `sparkleFloat ${Math.random()*2+1.8}s ease-out forwards`;
+      sparkle.style.pointerEvents = 'none';
+      sparkle.innerHTML = '✨';
+      sparklesDiv.appendChild(sparkle);
+      
+      setTimeout(()=>sparkle.remove(),3500);
+    },i*80);
+  }
+}
+
+// Cute confetti - gentle style
+function createCuteConfetti(){
+  const confettiDiv = document.getElementById('confetti');
+  if(!confettiDiv) return;
+  
+  const colors=['#ff6b9d','#ffc0cb','#ffb3d9','#ff69b4','#ffd9e8'];
+  for(let i=0;i<50;i++){
+    setTimeout(()=>{
+      const piece = document.createElement('div');
+      piece.style.position = 'absolute';
+      piece.style.left = Math.random()*100+'%';
+      piece.style.top = '-20px';
+      piece.style.width = (Math.random()*8+5)+'px';
+      piece.style.height = (Math.random()*8+5)+'px';
+      piece.style.background = colors[Math.floor(Math.random()*colors.length)];
+      piece.style.borderRadius = '50%';
+      piece.style.opacity = Math.random()*0.7+0.4;
+      piece.style.animation = `confettiFall ${Math.random()*3+2.5}s ease-in forwards`;
+      piece.style.pointerEvents = 'none';
+      piece.style.boxShadow = '0 0 10px rgba(255,107,157,0.6)';
+      confettiDiv.appendChild(piece);
+      
+      setTimeout(()=>piece.remove(),4500);
+    },i*100);
+  }
+}
+
+// Add all animations
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes sparkleFloat {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-120px) scale(0); opacity: 0; }
+  }
+  @keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+  }
+  @keyframes confettiFall {
+    0% { transform: translateY(0) rotateX(0) rotateZ(0); opacity: 1; }
+    100% { transform: translateY(100vh) rotateX(360deg) rotateZ(360deg); opacity: 0; }
+  }
+  @keyframes float {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-80px) scale(0); opacity: 0; }
+  }
+`;
+document.head.appendChild(style);
+
+window.addEventListener('resize',()=>{
+  initStars();
+  initPetals();
+});
 </script>
 </body>
 </html>
